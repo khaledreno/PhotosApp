@@ -34,7 +34,7 @@ private final PhotoRepository photoRepository;
 
         // Save and log
         PhotoEntity savedPhoto = photoRepository.save(photoObj);
-      //  log.trace("Photo saved with id {}", savedPhoto.getId());
+        log.info("Photo saved with id {}", savedPhoto.getId());
         return savedPhoto;
     }
 
