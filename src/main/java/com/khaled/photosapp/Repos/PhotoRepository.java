@@ -11,6 +11,7 @@ import java.util.List;
 public interface PhotoRepository extends JpaRepository<PhotoEntity,Long> {
     List<PhotoEntity> findByUploaderName(String uploadername);
     List<PhotoEntity> findByStatus(PhotoStatus status);
+//    void update(Long id,PhotoEntity photoEntity);
 
 
 
