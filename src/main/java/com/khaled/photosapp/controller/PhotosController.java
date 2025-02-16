@@ -37,22 +37,22 @@ public class PhotosController {
         this.photoService = photoService;
     }
 
-    //TODO all responses are null
-    @GetMapping("/pics")
-    public ResponseEntity<List<PhotoDTO>> getAllPhotos (){
-    List<PhotoEntity> photoEntityObjs = photoService.ListAllPhotos(); //retrive from repo via service layer
-        List<PhotoDTO> photoObj = photoEntityObjs.stream()  //convert from entityobj to DTO object via toDto method and used stream to loop on all items
-                .map(PhotoMapper.INSTANCE::toDTO)  //loop every element to the toDTO method via map
-                .collect(Collectors.toList()); //collect all new objects into new photoObj
-
-        return ResponseEntity.ok(photoObj);
-    }
-
-
+//    //TODO all responses are null
 //    @GetMapping("/pics")
-//    public List<PhotoEntity> images(){
-//        return photoService.ListAllPhotos();
+//    public ResponseEntity<List<PhotoDTO>> getAllPhotos (){
+//    List<PhotoEntity> photoEntityObjs = photoService.ListAllPhotos(); //retrive from repo via service layer
+//        List<PhotoDTO> photoObj = photoEntityObjs.stream()  //convert from entityobj to DTO object via toDto method and used stream to loop on all items
+//                .map(PhotoMapper.INSTANCE::toDTO)  //loop every element to the toDTO method via map
+//                .collect(Collectors.toList()); //collect all new objects into new photoObj
+//
+//        return ResponseEntity.ok(photoObj);
 //    }
+
+
+    @GetMapping("/pics")
+    public List<PhotoEntity> images(){
+        return photoService.ListAllPhotos();
+    }
 
     @PutMapping("/pics")
     public ResponseEntity<Map<String, String>> ChangePhotoStatus(@RequestBody PhotoDTO photoDTOobj) {
