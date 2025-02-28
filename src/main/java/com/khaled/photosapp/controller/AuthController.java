@@ -2,27 +2,35 @@ package com.khaled.photosapp.controller;
 
 
 import com.khaled.photosapp.dto.UserDTO;
-import com.khaled.photosapp.dto.UserMapper;
 import com.khaled.photosapp.entity.User;
 import com.khaled.photosapp.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
+@Slf4j
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
+    private final AuthenticationManager authenticationManager;
     private final UserService userService;
 
     @Autowired
-    public AuthController(UserService userService) {
+    public AuthController(AuthenticationManager authenticationManager, UserService userService) {
+        this.authenticationManager = authenticationManager;
         this.userService = userService;
     }
 
@@ -31,7 +39,8 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody User user) {
         if (userService.IsUserExist(user)) {
-            return ResponseEntity.badRequest().body("User Aleready exsists!");
+            log.info("User "+user.getUsername() +" already exists");
+            return ResponseEntity.badRequest().body("User "+user.getUsername() +" already exists");
         } else {
             userService.saveUser(user);
             return ResponseEntity.ok("User " + user.toString() + "was created");
@@ -40,70 +49,34 @@ public class AuthController {
 
 
 
-    @GetMapping("/login")
-    public ResponseEntity<UserDTO> getCurrentUser() {
+    @GetMapping("/me")
+    public ResponseEntity<User> getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        log.info("Authentication: {}", authentication);
 
-        if (authentication == null || !authentication.isAuthenticated() || "anonymousUser".equals(authentication.getPrincipal())) {
+        if (authentication == null || !authentication.isAuthenticated() || authentication instanceof AnonymousAuthenticationToken) {
+            log.warn("User is not authenticated");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
         String currentUsername = authentication.getName();
+        log.info("Current user: {}", currentUsername);
 
-        try {
-            User user = userService.findByUsername(currentUsername);
-            UserDTO userDTO = UserMapper.INSTANCE.toDTO(user);
-            return ResponseEntity.ok(userDTO);
-        } catch (UsernameNotFoundException e) {
+        User user = userService.findByUsername(currentUsername);
+        if (user == null) {
+            log.warn("User not found: {}", currentUsername);
             return ResponseEntity.notFound().build();
         }
+
+        // To prevent returning the password in the response
+        user.setPassword(null);
+
+        return ResponseEntity.ok(user);
     }
 
-
-    public class CurrentUser {
-        public ResponseEntity<UserDTO> getCurrentUser() {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-            if (authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)) {
-                User user = userService.findByUsername(authentication.getName());
-                UserDTO userDTO = new UserDTO(user.getId(), user.getUsername(), user.getCreatedAt(), user.getRole().getRole().name());
-                return ResponseEntity.ok(userDTO);
-            }
-
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-
-    }
-
-
-
-//           @PostMapping("/register")
-//    public ResponseEntity<User> registerUser(@RequestBody User user) {
-//        if (userService.findByUsername(user.getUsername()) != null) {
-//            return ResponseEntity.badRequest().build();
-//        }else return ResponseEntity.ok(userService.saveUser(user));
-//    }
-//
-
-
-//    }  @PostMapping("/register")
-//    public ResponseEntity<User> registerUser(@RequestBody User user) {
-//        if (userService.findByUsername(user.getUsername()).isPresent()) {
-//            return ResponseEntity.badRequest().build();
-//        }
-//        return ResponseEntity.ok(userService.saveUser(user));
-//    }
-
-//    @GetMapping("/login")
-//    public ResponseEntity<User> getCurrentUser() {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String currentUsername = authentication.getName();
-//        try {
-//            User user = userService.findByUsername(currentUsername);
-//            return ResponseEntity.ok(user);
-//        } catch (UsernameNotFoundException e) {
-//            return ResponseEntity.badRequest().build();
-//        }
-//    }
 
 }
+
+
+
+

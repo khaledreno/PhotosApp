@@ -32,64 +32,72 @@ public class PhotosController {
 
     @Autowired
     private PhotoService photoService;
+    private PhotoMapper photoMapper;
 
-    public PhotosController(PhotoService photoService) {
+    public PhotosController(PhotoService photoService,PhotoMapper photoMapper) {
         this.photoService = photoService;
+        this.photoMapper = photoMapper;
     }
 
 //    //TODO all responses are null
-//    @GetMapping("/pics")
-//    public ResponseEntity<List<PhotoDTO>> getAllPhotos (){
-//    List<PhotoEntity> photoEntityObjs = photoService.ListAllPhotos(); //retrive from repo via service layer
-//        List<PhotoDTO> photoObj = photoEntityObjs.stream()  //convert from entityobj to DTO object via toDto method and used stream to loop on all items
-//                .map(PhotoMapper.INSTANCE::toDTO)  //loop every element to the toDTO method via map
-//                .collect(Collectors.toList()); //collect all new objects into new photoObj
-//
-//        return ResponseEntity.ok(photoObj);
-//    }
-
-
     @GetMapping("/pics")
-    public List<PhotoEntity> images(){
-        return photoService.ListAllPhotos();
+    public ResponseEntity<List<PhotoDTO>> getAllPhotos (){
+    List<PhotoEntity> photoEntityObjs = photoService.ListAllPhotos(); //retrive from repo via service layer
+        List<PhotoDTO> photoObj = photoEntityObjs.stream()  //convert from entityobj to DTO object via toDto method and used stream to loop on all items
+                .map(photoMapper::toDTO)  //loop every element to the toDTO method via map
+                .collect(Collectors.toList()); //collect all new objects into new photoObj
+
+        return ResponseEntity.ok(photoObj);
     }
 
-    @PutMapping("/pics")
-    public ResponseEntity<Map<String, String>> ChangePhotoStatus(@RequestBody PhotoDTO photoDTOobj) {
-        log.info("object received: " + photoDTOobj.toString());
-        if (photoDTOobj.getId() == null)
-            throw new IllegalArgumentException("id is null");
 
-        PhotoEntity photoEntityobj = PhotoMapper.INSTANCE.toEntity(photoDTOobj);
-        photoService.updatePhotoStatus(photoEntityobj);
-        log.info("Changed status of photo {}", photoEntityobj.getId());
+//    @GetMapping("/pics")
+//    public List<PhotoEntity> images(){
+//        return photoService.ListAllPhotos();
+//    }
 
-        // Return a JSON response
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "Changed status of photo with id " + photoEntityobj.getId() + " to " + photoEntityobj.getStatus());
-        return ResponseEntity.ok(response);}
+//    @GetMapping("/pics")
+//    public ResponseEntity<List<PhotoEntity>> getPics() {
+//        List<PhotoEntity> pics = photoService.ListAllPhotos(); // whatever your service method is
+//        return ResponseEntity.ok(pics);
+//    }
 
-//    //gayli DTO h7wlo el entity 3shan a3mlo update bl service
+
+
 //    @PutMapping("/pics")
-//    public ResponseEntity<String> ChangePhotoStatus(@RequestBody PhotoDTO photoDTOobj) {
-//        log.info("object recived "+photoDTOobj.toString());
-//        if (photoDTOobj.getId()==null)
-//            throw new IllegalArgumentException("id is null");
+//    public ResponseEntity<Map<String, String>> changePhotoStatus(@RequestBody PhotoDTO photoDTOobj) {
+//        log.info("object received: " + photoDTOobj.toString());
 //
-//        PhotoEntity photoEntityobj = PhotoMapper.INSTANCE.toEntity(photoDTOobj);
+//        if (photoDTOobj.getId() == null) {
+//            throw new IllegalArgumentException("id is null");
+//        }
+//
+//        PhotoEntity photoEntityobj = photoMapper.toEntity(photoDTOobj);
 //        photoService.updatePhotoStatus(photoEntityobj);
 //        log.info("Changed status of photo {}", photoEntityobj.getId());
-//        //return "Changed status of photo with id " + photoEntityobj.getId()+" to "+photoEntityobj.getStatus();
-//        return ResponseEntity.ok("Sucess");
+//
+//        Map<String, String> response = new HashMap<>();
+//        response.put("message", "Changed status of photo with id " + photoEntityobj.getId() + " to " + photoEntityobj.getStatus());
+//
+//        return ResponseEntity.ok(response);
 //    }
 
-//    @PutMapping("/pics")
-//    public void ChangePhotoStatus(@RequestBody PhotoEntity photoDTOobj) {
-//       // PhotoEntity photoEntityobj = PhotoMapper.INSTANCE.toEntity(photoDTOobj);
-//        photoService.updatePhotoStatus(photoDTOobj);
-//    }
+    @PutMapping("/pics")
+    public ResponseEntity <Map<String,String>> changePhotoStatus(@RequestBody PhotoDTO photoDTO){
+        if (photoDTO.getId() == null)
+            return ResponseEntity.notFound().build();
 
+        PhotoEntity photoObj = photoMapper.toEntity(photoDTO);
+        photoService.updatePhotoStatus(photoObj);
+        log.info("Photo status changed to {}", photoDTO.getId());
 
+        //response must be ok for front end and with message for backend
+
+Map<String,String> response = new HashMap<>();
+   response.put("message", "Changed status of photo with id " + photoObj.getId() + " to " + photoObj.getStatus());
+
+        return ResponseEntity.ok(response);
+    }
 
 
     @DeleteMapping("/pics")

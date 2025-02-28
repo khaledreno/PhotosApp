@@ -44,18 +44,27 @@ private final PhotoRepository photoRepository;
     }
 
 
-//TODO:use an update method rather than save because when u use save you have to put all the fields again
-    public PhotoEntity updatePhotoStatus(PhotoEntity photoEntity) {
-        //retrive the object with id
-        PhotoEntity photoObj = photoRepository.findById(photoEntity.getId()).orElseThrow(() ->new IllegalArgumentException("Photo not found"));
-       photoObj.setStatus(photoEntity.getStatus());
-//        PhotoEntity updatedPhoto = photoRepository.save(photoEntity);
-        photoRepository.save(photoObj);
+//    public PhotoEntity updatePhotoStatus(PhotoEntity photoEntity) {
+//        //retrive the object with id
+//        PhotoEntity photoObj = photoRepository.findById(photoEntity.getId()).orElseThrow(() ->new IllegalArgumentException("Photo not found"));
+//       photoObj.setStatus(photoEntity.getStatus());
+////        PhotoEntity updatedPhoto = photoRepository.save(photoEntity);
+//        log.info("Photo updated with id {} and new status is {}", photoObj.getId(), photoObj.getStatus());
+//        photoRepository.save(photoObj);
+//
+//       // log.info("Photo updated with id {}", photoEntity.getId(), "new status is " + photoEntity.getStatus());
+//        return photoObj;
+//    }
 
-        log.info("Photo updated with id {}", photoEntity.getId(), "new status is " + photoEntity.getStatus());
+
+    public PhotoEntity updatePhotoStatus(PhotoEntity photoEntity) {
+        //make sure its there
+        PhotoEntity photoObj = photoRepository.findById(photoEntity.getId()).orElseThrow(()-> new IllegalArgumentException("Photo not found"));
+        photoObj.setStatus(photoEntity.getStatus());
+        photoRepository.save(photoObj);
+        log.info("Photo saved with id{} and new status is {}",photoObj.getId(), photoEntity.getStatus());
         return photoObj;
     }
-
 
 
     //which is better to send the status in the method or make an each method

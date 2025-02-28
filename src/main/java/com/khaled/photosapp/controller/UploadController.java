@@ -1,7 +1,7 @@
 package com.khaled.photosapp.controller;
 
 import com.khaled.photosapp.service.PhotoService;
-import lombok.SneakyThrows;
+//import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +29,7 @@ public class UploadController {
         this.photoService = photoService;
     }
 
-    @SneakyThrows
+//    @SneakyThrows
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/upload")
     public ResponseEntity<String> uploadPhoto(@RequestParam("file") MultipartFile file,
