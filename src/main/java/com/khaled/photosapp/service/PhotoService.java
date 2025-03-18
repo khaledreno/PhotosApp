@@ -24,24 +24,64 @@ private final PhotoRepository photoRepository;
         this.photoRepository = photoRepository;
     }
 
+//    @Transactional
+//    public PhotoEntity savePhoto(String location, String uploaderName) {
+//        if (location == null || location.isBlank() || uploaderName == null || uploaderName.isBlank()) {
+//            throw new IllegalArgumentException("Location and uploader name must not be null or empty");
+//        }
+//
+//        PhotoEntity photoObj = PhotoEntity.builder()
+//                .location(location)
+//                .uploaderName(uploaderName)
+//                .status(PhotoStatus.PENDING)
+//                .createdAt(LocalDateTime.now())
+//                .build();
+//
+//        // Save and log
+//        PhotoEntity savedPhoto = photoRepository.save(photoObj);
+//        log.info("Photo saved with id {}", savedPhoto.getId());
+//        return savedPhoto;
+//    }
+
     @Transactional
     public PhotoEntity savePhoto(String location, String uploaderName) {
-        if (location == null || location.isBlank() || uploaderName == null || uploaderName.isBlank()) {
-            throw new IllegalArgumentException("Location and uploader name must not be null or empty");
+        if (uploaderName == null || uploaderName.isBlank()) {
+            throw new IllegalArgumentException("Uploader name must not be null or empty");
         }
 
         PhotoEntity photoObj = PhotoEntity.builder()
-                .location(location)
+                .location(location != null ? location : "")
                 .uploaderName(uploaderName)
                 .status(PhotoStatus.PENDING)
                 .createdAt(LocalDateTime.now())
                 .build();
 
-        // Save and log
         PhotoEntity savedPhoto = photoRepository.save(photoObj);
         log.info("Photo saved with id {}", savedPhoto.getId());
         return savedPhoto;
     }
+
+
+    //return el location
+    public String getPhotoLocation(PhotoEntity photoEntity) {
+ return photoRepository.findById(photoEntity.getId())
+         .map(PhotoEntity::getLocation)
+         .orElseThrow(()-> new IllegalArgumentException("Photo not found"));}
+
+
+    @Transactional
+    public void updatePhotoLocation(PhotoEntity photo, String newLocation) {
+        if (photo == null || newLocation == null || newLocation.isBlank()) {
+            throw new IllegalArgumentException("Photo and new location must not be null or empty");
+        }
+
+        photo.setLocation(newLocation);
+        photoRepository.save(photo); // Updates the database
+        log.info("Updated photo location to {}", newLocation);
+    }
+
+
+
 
 
 //    public PhotoEntity updatePhotoStatus(PhotoEntity photoEntity) {

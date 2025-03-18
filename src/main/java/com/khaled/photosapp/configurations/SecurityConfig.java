@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -60,8 +59,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/pics/**").hasRole("ADMIN")
                         .requestMatchers("/home", "/login").permitAll()
-                        .requestMatchers("/upload/**").hasRole("USER")
-                        .anyRequest().permitAll()
+//                        .requestMatchers("/upload/**").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers("/upload").permitAll()
+                                .anyRequest().permitAll()
                 )
                 .formLogin(form -> form
                         .defaultSuccessUrl("http://localhost:4200/pics", true)
@@ -310,27 +310,3 @@ public class SecurityConfig {
 //    }
 //
 ////
-////    @Bean
-////    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-////        http
-////                .csrf(AbstractHttpConfigurer::disable)
-////                .authorizeHttpRequests(auth -> auth
-////                        .requestMatchers("/", "/upload/**").permitAll()
-////                        .requestMatchers("/pics/**").authenticated()
-////                        .anyRequest().permitAll()
-////                )
-////                .formLogin(withDefaults());
-////
-////        return http.build();
-////    }
-//
-//    @Bean
-//    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-//        return authenticationConfiguration.getAuthenticationManager();
-//    }
-//
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
-//}
