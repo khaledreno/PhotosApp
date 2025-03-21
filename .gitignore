@@ -1,4 +1,6 @@
 HELP.md
+
+### Java (Spring Boot) ###
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
@@ -14,7 +16,7 @@ target/
 .sts4-cache
 
 ### IntelliJ IDEA ###
-.idea
+.idea/
 *.iws
 *.iml
 *.ipr
@@ -25,9 +27,39 @@ target/
 /dist/
 /nbdist/
 /.nb-gradle/
+
+### Gradle ###
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
 ### VS Code ###
 .vscode/
+
+### Node.js (Angular) ###
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend/npm-debug.log
+frontend/yarn-debug.log
+frontend/yarn-error.log
+
+### Logs ###
+*.log
+logs/
+*.log.*
+
+### OS Specific ###
+.DS_Store
+Thumbs.db
+
+### Docker ###
+*.env
+docker-compose.override.yml
+
+### Compiled Class Files ###
+*.class
+
+### Other ###
+.idea/
+*.swp

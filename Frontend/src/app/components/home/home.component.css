@@ -1,0 +1,147 @@
+  /* Navbar styling */
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Ensure navbar is above other elements */
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .navbar h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #6a11cb;
+  }
+  
+  .navbar a {
+    color: #000000;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    padding-right: 50px;
+
+  }
+  
+  .navbar a:hover {
+    color: #2575fc;
+  }
+  
+  /* Container styling */
+  .container {
+    animation: fadeIn 1s ease-in-out;
+    margin-top: 80px; /* Add margin to avoid overlap with navbar */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 80px); /* Adjust height to account for navbar */
+  }
+
+.pic-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Space between cards */
+}
+
+.pic-card {
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow */
+  transition: box-shadow 0.3s ease;
+  overflow: hidden; /* Prevent content from leaking out */
+  display: flex; /* Make the card a flex container */
+  flex-direction: column; /* Stack children vertically */
+}
+
+.pic-card:hover {
+  transform: scale(1.03); /* Zoom in the card slightly */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Add hover effect */
+}
+
+.pic-image {
+  max-width: 100%;
+  border-radius: 5px;
+  margin-top: 10px;
+  transition: transform 0.3s ease; /* Add transition for smooth zoom */
+
+}
+
+.pic-image:hover {
+  transform: scale(1.1); /* Zoom in the image slightly more than the card */
+}
+
+/* Ensure long text wraps and doesn't overflow */
+mat-card-content p {
+  word-wrap: break-word; /* Break long words */
+  overflow-wrap: break-word; /* Break long words */
+  white-space: normal; /* Allow text to wrap */
+  margin: 5px 0; /* Add some spacing */
+}
+
+/* Make the location text smaller */
+mat-card-content p strong {
+  font-size: 14px; /* Adjust the font size as needed */
+}
+
+mat-card-content p {
+  font-size: 12px; /* Adjust the font size as needed */
+}
+
+.button-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%; /* Ensure the row takes full width */
+  margin-top: auto; /* Push the button row to the bottom */
+}
+
+.approve-button {
+  background-color: green !important;
+  color: white !important;
+  padding: 8px 16px; /* Add padding */
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between icon and text */
+  flex: 1; /* Allow buttons to share space equally */
+  margin-right: 8px; /* Add spacing between buttons */
+}
+
+.decline-button {
+  background-color: white !important;
+  color: red !important;
+  padding: 8px 16px; /* Add padding */
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between icon and text */
+  flex: 1; /* Allow buttons to share space equally */
+}
+
+.delete-button {
+  background-color: red !important;
+  color: white !important;
+  border-radius: 4px !important; /* Optional: Add rounded corners */
+  padding: 8px 16px; /* Add padding */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* Space between icon and text */
+  width: 100%; /* Full width */
+  margin-top: 8px; /* Add spacing above the button */
+}
+
+mat-card-actions {
+  display: flex;
+  flex-direction: column; /* Stack buttons vertically */
+  margin-top: auto; /* Push actions to the bottom */
+}
+
+.label strong {
+  font-size: 1px; /* Adjust the font size as needed */
+}

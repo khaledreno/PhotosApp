@@ -1,0 +1,175 @@
+.pic-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Space between cards */
+}
+
+.pic-card {
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow */
+  transition: box-shadow 0.3s ease;
+  overflow: hidden; /* Prevent content from leaking out */
+}
+
+.pic-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Add hover effect */
+}
+
+.pic-image {
+  max-width: 100%;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+/* Ensure long text wraps and doesn't overflow */
+mat-card-content p {
+  word-wrap: break-word; /* Break long words */
+  overflow-wrap: break-word; /* Break long words */
+  white-space: normal; /* Allow text to wrap */
+  margin: 5px 0; /* Add some spacing */
+}
+
+/* Make the location text smaller */
+mat-card-content p strong {
+  font-size: 14px; /* Adjust the font size as needed */
+}
+
+mat-card-content p {
+  font-size: 12px; /* Adjust the font size as needed */
+}
+
+.button-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%; /* Ensure the row takes full width */
+}
+
+.approve-button {
+  background-color: green !important;
+  color: white !important;
+  padding: 8px 16px; /* Add padding */
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between icon and text */
+  flex: 1; /* Allow buttons to share space equally */
+  margin-right: 8px; /* Add spacing between buttons */
+}
+
+.decline-button {
+  background-color:  white !important;;
+  color: red !important;;
+  padding: 8px 16px; /* Add padding */
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between icon and text */
+  flex: 1; /* Allow buttons to share space equally */
+}
+
+.delete-button {
+  background-color: red !important;
+  color: white !important;
+  border-radius: 4px !important; /* Optional: Add rounded corners */
+  padding: 8px 16px; /* Add padding */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* Space between icon and text */
+  width: 100%; /* Full width */
+  margin-top: 8px; /* Add spacing above the button */
+}
+
+mat-card-actions {
+  display: flex;
+  flex-direction: column; /* Stack buttons vertically */
+  margin-top: 10px;
+}
+
+.label strong {
+  font-size: 1px; /* Adjust the font size as needed */
+}
+
+
+
+////////////////////////////////////////////////////////////
+.pic-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  /* padding: 20px; */
+}
+
+.pic-card {
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 9px;
+  padding: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow */
+  transition: box-shadow 0.3s ease;
+  overflow: hidden; /* Prevent content from leaking out */
+
+}
+
+.pic-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* Add hover effect */
+}
+
+.pic-image {
+  max-width: 100%;
+  max-height: 150px;
+  border-radius: 6px;
+  margin-top: 10px;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+}
+
+/* Custom button styles */
+.approve-button {
+  background-color: green !important;
+  color: white !important;
+  border-radius: 4px !important; /* Optional: Add rounded corners */
+}
+
+.decline-button {
+  background-color: red !important;
+  color: white !important;
+  border-radius: 4px !important; /* Optional: Add rounded corners */
+  display: flex;
+
+}
+mat-card-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+mat-card-content p {
+  word-wrap: break-word; /* Break long words */
+  overflow-wrap: break-word; /* Break long words */
+  white-space: normal; /* Allow text to wrap */
+  margin: 5px 0; /* Add some spacing */
+}
+
+.button-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%; /* Ensure the row takes full width */
+}
+
+.delete-button {
+  background-color: red;
+  color: white;
+  padding: 8px 16px; /* Add padding */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* Space between icon and text */
+  width: 100%; /* Full width */
+  margin-top: 8px; /* Add spacing above the button */
+}

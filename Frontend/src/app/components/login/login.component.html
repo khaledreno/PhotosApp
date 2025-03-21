@@ -1,0 +1,35 @@
+Navbar
+<nav class="navbar">
+  <h1>My Awesome App</h1>
+  <div>
+    <a href="http://localhost:8080/login">Login</a>
+    <a href="/pics">Pics</a>
+    <a href="/register">Register</a>
+    <a href="/upload">Upload an Image</a>
+
+  </div>
+</nav>
+
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">Login</div>
+          <div class="card-body">
+            <form (ngSubmit)="login()">
+              <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" [(ngModel)]="credentials.username" name="username">
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" [(ngModel)]="credentials.password" name="password">
+              </div>
+              <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

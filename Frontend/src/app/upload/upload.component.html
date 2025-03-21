@@ -1,0 +1,48 @@
+<!-- Navbar -->
+<nav class="navbar">
+  <h1>My Awesome App</h1>
+  <div>
+    <a href="http://localhost:8080/login">Login</a>
+    <a href="/pics">Pics</a>
+    <a href="/home">Home</a>
+
+    <!-- <a href="/login">Login</a> -->
+    <a href="http://localhost:8080/logout">Logout</a>
+  </div>
+</nav>
+
+
+
+<div class="upload-container">
+    <h1>Upload Files</h1>
+  
+    <!-- File Input -->
+    <input type="file" (change)="onFileSelected($event)" multiple />
+  
+    <div class="upload-area"
+       (dragover)="onDragOver($event)"
+       (drop)="onDrop($event)"
+       [class.dragover]="isDragging">
+    <p>Drag and drop your files here</p>
+    <p>or</p>
+    <label for="fileInput" class="choose-files-button">Choose files</label>
+    <input id="fileInput" type="file" (change)="onFileSelected($event)" multiple>
+  </div>
+
+  
+    <!-- Drag and Drop Area -->
+    <div class="drag-drop-area" (dragover)="onDragOver($event)" (drop)="onDrop($event)">
+      <p>Drag and drop your files here, or click to select files.</p>
+    </div>
+  
+    <!-- Uploaded Files List -->
+    <div *ngIf="uploadedFiles.length > 0">
+      <h2>Files to Upload:</h2>
+      <ul>
+        <li *ngFor="let file of uploadedFiles">{{ file.name }}</li>
+      </ul>
+    </div>
+  
+    <!-- Upload Button -->
+    <button mat-raised-button color="primary" (click)="uploadFiles()">Upload</button>
+  </div>
